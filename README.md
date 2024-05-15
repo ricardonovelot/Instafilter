@@ -32,9 +32,9 @@
 </table>
 <br>
 
-<td valign="center">
+<td align="center">
 <h2>Interactive Preview</h2>
-<img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/bdb2d186-edc7-47f9-a3d9-00f88dc98288" width="500">
+<img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/bdb2d186-edc7-47f9-a3d9-00f88dc98288" width="300">
 </td>
 
 <h2>Installation and Usage</h2>
