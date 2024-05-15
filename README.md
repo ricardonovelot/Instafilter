@@ -7,23 +7,20 @@
 <td valign="top">
 
 <h2>About</h2>
-<p>Instafilter is an iOS application that allows users to apply various filters to their photos. It utilizes Core Image and SwiftUI to provide a seamless image processing experience.</p>
+<p>Instafilter allows users to apply and edit filters to photos.</p>
 
 <h3>Features</h3>
 <ul>
-<li><strong>Photo Picker</strong>: Import photos from the device.</li>
-<li><strong>Filter Intensity Control</strong>: Adjust the intensity of the filters applied.</li>
-<li><strong>Multiple Filters</strong>: Choose from a variety of filters like Sepia Tone, Gaussian Blur, Pixellate, etc.</li>
-<li><strong>Share Filtered Images</strong>: Share your filtered images directly from the app.</li>
+<li><strong>Photo Picker</strong></li>
+<li><strong>Filter Intensity Control</strong></li>
+<li><strong>Share Filtered Images</strong></li>
 </ul>
 
 <h3>Technical Highlights</h3>
 <ul>
-<li>Core Image for filter processing.</li>
-<li>SwiftUI for user interface.</li>
-<li>PhotosUI for photo picking.</li>
-<li>App StoreKit for requesting reviews.</li>
-<li>State management using SwiftUI's @State and @AppStorage.</li>
+<li>CoreImage</li>
+<li>StoreKit</li>
+<li>PhotosUI</li>
 </ul>
 <br>
 
