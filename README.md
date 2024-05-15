@@ -25,21 +25,13 @@
 <br>
 
 </td>
-<td valign="top">
-<img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/36fc8c38-7cf3-4747-9e7e-82b239fae6ec" width="500">
-</td>
-</tr>
-</table>
-<br>
-
-<table>
-<tr>
-<td width="5000">
-<h2>Interactive Preview</h2>
+<td valign="top" width="500">
+<h3>Preview</h3>
 <img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/bdb2d186-edc7-47f9-a3d9-00f88dc98288" align="center" width="300">
 </td>
 </tr>
 </table>
+<br>
 
 <h2>Installation and Usage</h2>
 <ol>
