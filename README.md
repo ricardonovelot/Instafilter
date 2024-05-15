@@ -33,8 +33,10 @@
 <br>
 
 <table>
+<tr>
 <h2>Interactive Preview</h2>
 <img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/bdb2d186-edc7-47f9-a3d9-00f88dc98288" align="center" width="300">
+</tr>
 </table>
 
 <h2>Installation and Usage</h2>
