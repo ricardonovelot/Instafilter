@@ -7,7 +7,7 @@
 <td valign="top">
 
 <h2>About</h2>
-<p>Instafilter allows users to apply and edit filters to photos.</p>
+<p>Instafilter allows users to edit photos with filters through a user-friendly interface.</p>
 
 <h3>Features</h3>
 <ul>
