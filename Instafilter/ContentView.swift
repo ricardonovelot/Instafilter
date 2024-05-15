@@ -12,9 +12,10 @@ import SwiftUI
 import StoreKit
 
 struct ContentView: View {
-    @AppStorage("filterCount") var filterCount = 0
-    @Environment(\.requestReview) var requestReview
+    @AppStorage("filterCount") var filterCount = 0  // Counts the number of times a filter is applied
+    @Environment(\.requestReview) var requestReview // Request review after certain interactions
     
+    // State variables for image processing
     @State private var processedImage: Image?
     @State private var filterIntensity = 0.5
     @State private var filterRadius = 0.5
@@ -23,13 +24,14 @@ struct ContentView: View {
     @State private var currentFilter: CIFilter = CIFilter.sepiaTone()
     @State private var showingFilters = false
     
-    let context = CIContext() // our context allow us to create a image recipe into actual pixels
+    let context = CIContext() // Core Image context to process the filter operations
 
     var body: some View {
         NavigationStack{
             VStack{
                 Spacer()
                 
+                // Image picker component
                 PhotosPicker(selection: $selectedItem){
                     if let processedImage {
                         processedImage
@@ -43,7 +45,8 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                if let processedImage {
+                // Filter controls only appear if an image is loaded
+                if processedImage != nil {
                     HStack{
                         Text("Intensity")
                         Slider(value: $filterIntensity)
@@ -62,10 +65,8 @@ struct ContentView: View {
                             .onChange(of: filterScale, applyProcessing)
                     }
                 }
-                
-                
-                
-                ///
+
+                // Filter and sharing options
                 HStack{
                     Button("Change Filter", action: changeFilter)
                     
@@ -74,12 +75,13 @@ struct ContentView: View {
                     if let processedImage {
                         ShareLink(item: processedImage, preview: SharePreview("Instafilter image", image: processedImage))
                     }
-                    ///
                 }
             }
-            .padding([.horizontal,.bottom])
+            .padding([.horizontal, .bottom])
             .navigationTitle("Instafilter")
             .confirmationDialog("Select a filter", isPresented: $showingFilters){
+                // List of filters available for application
+                Button("Crystallize") { setFilter(CIFilter.crystallize()) }
                 Button("Crystallize") { setFilter(CIFilter.crystallize()) }
                 Button("Edges") { setFilter(CIFilter.edges()) }
                 Button("Gaussian Blur") { setFilter(CIFilter.gaussianBlur()) }
@@ -94,10 +96,13 @@ struct ContentView: View {
             }
         }
     }
+    
+    // Shows filter selection dialog
     func changeFilter(){
         showingFilters = true
     }
     
+    // Loads image from PhotosPicker and applies the current filter
     func loadImage(){
         Task{
             guard let imageData = try await selectedItem?.loadTransferable(type: Data.self) else {return}
@@ -109,38 +114,33 @@ struct ContentView: View {
         }
     }
     
+    // Applies the selected filter properties to the image
     func applyProcessing(){
         let inputKeys = currentFilter.inputKeys
 
+        // Setting filter parameters based on availability
         if inputKeys.contains(kCIInputIntensityKey) { currentFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey) }
-        
         if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(filterRadius, forKey: kCIInputRadiusKey) }
-        
         if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(filterScale, forKey: kCIInputScaleKey) }
 
+        guard let outputImage = currentFilter.outputImage,
+              let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {return}
         
-        guard let outputImage = currentFilter.outputImage else {return}
-        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {return}
-        
-        let uiImage = UIImage(cgImage: cgImage)
-        processedImage = Image(uiImage: uiImage)
+        processedImage = Image(uiImage: UIImage(cgImage: cgImage))
     }
 
-    
+    // Sets the selected filter and re-applies to the image
     @MainActor func setFilter(_ filter: CIFilter) {
         currentFilter = filter
         loadImage()
         
         filterCount += 1
-
+        // Request a review after applying 5 different filters
         if filterCount >= 5 {
             filterCount = 0
             requestReview()
         }
-        
-        
     }
-    
 }
 
 #Preview {
