@@ -10,6 +10,7 @@ import CoreImage.CIFilterBuiltins
 import PhotosUI
 import SwiftUI
 import StoreKit
+import UIKit
 
 struct ContentView: View {
     @AppStorage("filterCount") var filterCount = 0  // Counts the number of times a filter is applied
@@ -28,73 +29,148 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack{
-            VStack{
-                Spacer()
-                
-                // Image picker component
-                PhotosPicker(selection: $selectedItem){
-                    if let processedImage {
-                        processedImage
-                            .resizable()
-                            .scaledToFit()
-                    } else {
-                        ContentUnavailableView("No Picture", systemImage: "photo.badge.plus", description: Text("Tap to import a photo"))
-                    }
-                }.buttonStyle(.plain)
-                    .onChange(of: selectedItem, loadImage)
-                
-                Spacer()
-                
-                // Filter controls only appear if an image is loaded
-                if processedImage != nil {
-                    HStack{
-                        Text("Intensity")
-                        Slider(value: $filterIntensity)
-                            .onChange(of: filterIntensity, applyProcessing)
-                    }
-                    
-                    HStack{
-                        Text("Radius")
-                        Slider(value: $filterRadius)
-                            .onChange(of: filterRadius, applyProcessing)
-                    }
-                    
-                    HStack{
-                        Text("Scale")
-                        Slider(value: $filterScale)
-                            .onChange(of: filterScale, applyProcessing)
-                    }
-                }
-
-                // Filter and sharing options
-                HStack{
-                    Button("Change Filter", action: changeFilter)
+            ScrollView{
+                VStack{
+                    Spacer()
+                    PhotosPicker(selection: $selectedItem){
+                        if let processedImage {
+                            processedImage
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                                .frame(height: 300)
+                                .padding(.horizontal)
+                        } else {
+                            ContentUnavailableView("No Picture", systemImage: "photo.badge.plus", description: Text("Tap to import a photo"))
+                        }
+                    }.buttonStyle(.plain)
+                        .onChange(of: selectedItem, loadImage)
                     
                     Spacer()
+                    // Image picker component
                     
-                    if let processedImage {
-                        ShareLink(item: processedImage, preview: SharePreview("Instafilter image", image: processedImage))
+                    
+                    // Filter controls, only appear if an image is loaded
+                    if processedImage != nil {
+                        VStack {
+                            VStack{
+                                HStack{
+                                    
+                                    Slider(value: $filterIntensity)
+                                        .onChange(of: filterIntensity, applyProcessing)
+                                    Text("Intensity")
+                                        .padding(.horizontal)
+                                        .foregroundStyle(.secondary)
+                                        .frame(width: 100,alignment: .trailing)
+                                }
+                                
+                                HStack{
+                                    Slider(value: $filterRadius)
+                                        .onChange(of: filterRadius, applyProcessing)
+                                    Text("Radius")
+                                        .padding(.horizontal)
+                                        .foregroundStyle(.secondary)
+                                        .frame(width: 100,alignment: .trailing)
+                                }
+                                
+                                HStack{
+                                    Slider(value: $filterScale)
+                                        .onChange(of: filterScale, applyProcessing)
+                                    Text("Scale")
+                                        .padding(.horizontal)
+                                        .foregroundStyle(.secondary)
+                                        .frame(width: 100,alignment: .trailing)
+                                }
+                            }
+                            .padding()
+                            .padding(.vertical,8)
+                        }
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding()
                     }
                 }
+                .frame(idealHeight: 500)
+                
+                // Filter and sharing options.
+                
+                
             }
-            .padding([.horizontal, .bottom])
             .navigationTitle("Instafilter")
-            .confirmationDialog("Select a filter", isPresented: $showingFilters){
-                // List of filters available for application
-                Button("Crystallize") { setFilter(CIFilter.crystallize()) }
-                Button("Crystallize") { setFilter(CIFilter.crystallize()) }
-                Button("Edges") { setFilter(CIFilter.edges()) }
-                Button("Gaussian Blur") { setFilter(CIFilter.gaussianBlur()) }
-                Button("Pixellate") { setFilter(CIFilter.pixellate()) }
-                Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
-                Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
-                Button("Vignette") { setFilter(CIFilter.vignette()) }
-                Button("False Color") { setFilter(CIFilter.falseColor()) }
-                Button("Zoom Blur") { setFilter(CIFilter.zoomBlur()) }
-                Button("Noir") { setFilter(CIFilter.photoEffectNoir()) }
-                Button("Cancel", role: .cancel) { }
-            }
+            
         }
+        
+        .safeAreaInset(edge: .bottom){
+            VStack{
+                HStack{
+                    Button(action: changeFilter) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .frame(width: 110, height: 50)
+                                    .offset(x: 25, y: -20)
+                                    .rotationEffect(.degrees(10))
+                                    .foregroundStyle(.white)
+                                
+                                Text("Change Filter")
+                                    .padding()
+                                    .foregroundColor(.white.opacity(0.9))
+                                    .fontWeight(.bold)
+                                    .background(.ultraThinMaterial)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(
+                                                LinearGradient(
+                                                    colors: [
+                                                        Color.clear,
+                                                        Color.white.opacity(0.2),
+                                                    ],
+                                                    startPoint: .leading,
+                                                    endPoint: .trailing
+                                                ),
+                                                lineWidth: 4
+                                            )
+                                    )
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
+                        }
+                }
+                .offset(x: -10)
+                
+                Text(currentFilter.name)
+                    .foregroundStyle(LinearGradient(colors: [.secondary, .secondary.opacity(0.6)], startPoint: .top, endPoint: .bottom))
+                .padding(.top,12)
+                
+                HStack{
+                    Spacer()
+                    if let processedImage {
+                        ShareLink(item: processedImage, preview: SharePreview("Instafilter image", image: processedImage))
+                            .labelStyle(.iconOnly)
+                    } else {
+                        ShareLink(item: "")
+                            .labelStyle(.iconOnly)
+                            .disabled(true)
+                    }
+                }
+                .padding(.horizontal,30)
+            }
+            .padding(.top, 44)
+            .padding(.bottom,8)
+            .background(.background.opacity(0.8))
+        }
+        
+        .confirmationDialog("Choose filter", isPresented: $showingFilters){
+            // List of filters available for application
+            Button("Crystallize") { setFilter(CIFilter.crystallize()) }
+            Button("Edges") { setFilter(CIFilter.edges()) }
+            Button("Gaussian Blur") { setFilter(CIFilter.gaussianBlur()) }
+            Button("Pixellate") { setFilter(CIFilter.pixellate()) }
+            Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
+            Button("Vignette") { setFilter(CIFilter.vignette()) }
+            Button("False Color") { setFilter(CIFilter.falseColor()) }
+            Button("Noir") { setFilter(CIFilter.photoEffectNoir()) }
+            Button("Cancel", role: .cancel) { }
+        }
+        
     }
     
     // Shows filter selection dialog
@@ -141,6 +217,7 @@ struct ContentView: View {
             requestReview()
         }
     }
+        
 }
 
 #Preview {
