@@ -1,4 +1,4 @@
-<h3><a href="https://github.com/ricardonovelot/Old-Projects.md">❮‎‎‎ &nbsp; Old Projects</a></h3>
+<h3><a href="https://github.com/ricardonovelot/ricardonovelot/blob/main/Old-Projects.md">❮‎‎‎ &nbsp; Old Projects</a></h3>
 
 <h1>Instafilter</h1>
 
