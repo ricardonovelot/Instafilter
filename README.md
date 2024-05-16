@@ -25,9 +25,8 @@
 <br>
 
 </td>
-<td valign="top" width="500">
-<h3>Preview</h3>
-<img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/bdb2d186-edc7-47f9-a3d9-00f88dc98288" align="center" width="300">
+<td valign="top">
+<img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/36fc8c38-7cf3-4747-9e7e-82b239fae6ec">
 </td>
 </tr>
 </table>
@@ -50,3 +49,12 @@
 <p>"100 Days with SwiftUI" for presenting the challenge and guiding through advanced concepts of SwiftUI and Swift.</p>
 <p>The iOS development community for sharing knowledge and best practices.</p>
 <br>
+
+<table>
+<td>
+<tr with="5000">
+<h2>Interactive Preview</h2>
+<img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/bdb2d186-edc7-47f9-a3d9-00f88dc98288">
+</td>
+</tr>
+</table>
