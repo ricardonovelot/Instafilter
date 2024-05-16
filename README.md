@@ -52,7 +52,7 @@
 
 <table>
 <tr>
-<h2>Interactive Preview</h2>
+<h2>Video Preview</h2>
 <td width="5000" align="center">
 <img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/bdb2d186-edc7-47f9-a3d9-00f88dc98288" width="300" >
 </tr>
