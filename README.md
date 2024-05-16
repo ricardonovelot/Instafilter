@@ -52,9 +52,15 @@
 
 <table>
 <tr>
-<h2>Interactive Preview</h2>
-<td width="5000" align="center">
-<img src="https://github.com/ricardonovelot/Instafilter/assets/84286086/bdb2d186-edc7-47f9-a3d9-00f88dc98288" width="300" >
-</tr>
+<h2>Video Previews</h2>
+<td width="2500" align="center">
+<video src="https://github.com/ricardonovelot/GuessTheFlag/assets/84286086/0dcd165e-b3a5-4575-b631-018233fd30f3" width="300" controls title="Accessibility"></video>
+<br>
+Turn on sound for the best experience
 </td>
+<td width="2500" align="center">
+<video src="https://github.com/ricardonovelot/Instafilter/assets/84286086/36fc8c38-7cf3-4747-9e7e-82b239fae6ec" width="300" controls title="Accessibility"></video>
+<br>
+</td>
+</tr>
 </table>
